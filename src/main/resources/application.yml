@@ -1,0 +1,27 @@
+#  TODO(??? ??)
+
+server:
+  port: 3000
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    url: jdbc:h2:mem:searchDb
+    username: search
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
