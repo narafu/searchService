@@ -2,6 +2,7 @@ package com.example.searchservice.controller
 
 import com.example.searchservice.common.enum.SearchSourceType
 import com.example.searchservice.common.enum.SortType
+import com.example.searchservice.entity.SearchEntity
 import com.example.searchservice.service.SearchService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -25,7 +26,7 @@ class SearchController(
 ) {
 
     @Operation(
-        summary = " 블로그 검색",
+        summary = "블로그 검색",
         description = "키워드를 통해 블로그를 검색할 수 있습니다."
     )
     @GetMapping("/blog")
@@ -51,8 +52,14 @@ class SearchController(
         searchService.upsertKeywordData(query)
     }
 
+    @Operation(
+        summary = "인기 검색어 목록",
+        description = "사용자들이 많이 검색한 순서대로, 최대 10개의 검색 키워드를 제공합니다."
+    )
     @GetMapping("/popular")
-    fun popularList() {
+    fun popularList(): List<SearchEntity> {
+
+        return searchService.popularList()
 
     }
 

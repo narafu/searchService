@@ -48,4 +48,8 @@ class SearchService(
             ?.let { it.searchCount++; }
             ?: searchRepo.save(SearchEntity(keyword))
     }
+
+    fun popularList(): List<SearchEntity> {
+        return searchRepo.findTop10ByOrderBySearchCountDesc()
+    }
 }
