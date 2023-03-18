@@ -11,7 +11,6 @@ plugins {
 allprojects {
     ext {
         set("springdoc_version", "1.6.14")
-        set("querydsl_version", "5.0.0")
         set("mapstruct_version", "1.5.3.Final")
         set("log4jdbc_version", "1.16")
     }
@@ -48,12 +47,6 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:${project.ext.get("springdoc_version")}")
     implementation("org.springdoc:springdoc-openapi-kotlin:${project.ext.get("springdoc_version")}")
     implementation("org.springdoc:springdoc-openapi-webmvc-core:${project.ext.get("springdoc_version")}")
-
-    /**
-     * DB
-     */
-    implementation("com.querydsl:querydsl-jpa:${project.ext.get("querydsl_version")}")
-    implementation("com.querydsl:querydsl-apt:${project.ext.get("querydsl_version")}:jpa")
 
     /**
      * object mapper
