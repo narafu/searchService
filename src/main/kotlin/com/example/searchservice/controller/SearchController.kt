@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
-import javax.validation.constraints.Size
 
 @Tag(name = "검색")
 @Validated
@@ -45,11 +44,10 @@ class SearchController(
         @RequestParam(defaultValue = "1") @Min(value = 1) @Max(value = 50) page: Int,
         @Parameter(description = "한 페이지에 보여질 문서 수, 1~50 사이의 값, 기본 값 10")
         @RequestParam(defaultValue = "10") @Min(value = 1) @Max(value = 50) size: Int,
-    ) {
+    ): String {
 
-//        val response = searchService.blogList(searchSource, query, sort, page, size)
-
-        searchService.upsertKeywordData(query)
+        return searchService.blogList(searchSource, query, sort, page, size)
+            .also { searchService.upsertKeywordData(query) }
     }
 
     @Operation(
@@ -60,7 +58,6 @@ class SearchController(
     fun popularList(): List<SearchEntity> {
 
         return searchService.popularList()
-
     }
 
 }

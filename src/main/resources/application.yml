@@ -1,7 +1,5 @@
-#  TODO(??? ??)
-
 server:
-  port: 3000
+  port: 8080
   shutdown: graceful
 
 spring:
@@ -25,3 +23,19 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+src-api:
+  kakao:
+    host: https://dapi.kakao.com
+    rest-api:
+      key: Authorization
+      value: KakaoAK 9b020a52082c0da8b0dd38fd2caa52f7
+  naver:
+    host: https://openapi.naver.com
+    client-id:
+      key: X-Naver-Client-Id
+      value: clb8tZ4w_oEG3pY_CdCt
+    client-secret:
+      key: X-Naver-Client-Secret
+      value: bvFCWtbcwq
+
