@@ -36,6 +36,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -57,7 +58,7 @@ dependencies {
     /**
      * logging
      */
-    implementation ("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:${project.ext.get("log4jdbc_version")}")
+    implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:${project.ext.get("log4jdbc_version")}")
 }
 
 tasks.withType<KotlinCompile> {

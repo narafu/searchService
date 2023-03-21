@@ -1,16 +1,14 @@
 package com.example.searchservice.service
 
-import com.example.searchservice.common.RestTemplateConfig
-import com.example.searchservice.common.SourceInfo
+import com.example.searchservice.common.component.SourceInfo
+import com.example.searchservice.common.component.TxLock
+import com.example.searchservice.common.config.RestTemplateConfig
 import com.example.searchservice.common.enum.SearchSourceType
 import com.example.searchservice.common.enum.SortType
 import com.example.searchservice.entity.SearchEntity
 import com.example.searchservice.repository.ServiceRepo
 import org.springframework.boot.configurationprocessor.json.JSONObject
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.MediaType
+import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.util.UriComponentsBuilder
@@ -51,7 +49,9 @@ class SearchService(
             )
         }
 
-        return connect(url, HttpEntity<JSONObject>(requestHeader), HttpMethod.GET)
+        val res = connect(url, HttpEntity<JSONObject>(requestHeader), HttpMethod.GET)
+
+        return if (res.statusCode == HttpStatus.OK) res.body!! else res.statusCode.toString()
     }
 
     private fun searchKakao(
@@ -117,10 +117,11 @@ class SearchService(
         .build()
         .toUriString()
 
-    private fun connect(url: String, requestHttp: HttpEntity<JSONObject>, method: HttpMethod): String =
-        restTemplateConfig.restTemplate().exchange(url, method, requestHttp, String::class.java).toString()
+    private fun connect(url: String, requestHttp: HttpEntity<JSONObject>, method: HttpMethod): ResponseEntity<String> =
+        restTemplateConfig.restTemplate().exchange(url, method, requestHttp, String::class.java)
 
     @Transactional
+    @TxLock("search")
     fun upsertKeywordData(query: String) {
 
         val keyword = query.trim()

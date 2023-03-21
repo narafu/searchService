@@ -1,4 +1,4 @@
-package com.example.searchservice.common
+package com.example.searchservice.common.component
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
