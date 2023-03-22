@@ -1,37 +1,31 @@
 package com.example.searchservice.service
 
-import com.example.searchservice.common.enum.SearchSourceType
-import com.example.searchservice.common.enum.SortType
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
-internal class SearchServiceTest(
-    private val searchService: SearchService
+@Transactional
+class SearchServiceTest(
+    @Autowired private val searchService: SearchService
 ) {
-
-    @Test
-    fun blogList() {
-
-        val searchSource = SearchSourceType.kakao
-        val query = "카카오"
-        val sort = SortType.accuracy
-        val page = 1
-        val size = 10
-
-        searchService.blogList(searchSource, query, sort, page, size)
-    }
-
-    @Test
-    fun upsertKeywordData() {
-
-        val query = "카카오"
-        searchService.upsertKeywordData(query)
-    }
 
     @Test
     fun popularList() {
 
-        searchService.popularList()
+        for (i in 1..10) {
+            for (j in 1..i) {
+                searchService.upsertKeywordData(query = i.toString())
+            }
+        }
+
+        val popularList = searchService.popularList()
+
+        for (i in 0..9) {
+            Assertions.assertTrue(popularList[i].keyword == (10 - i).toString())
+            Assertions.assertTrue(popularList[i].searchCount == (10 - i).toLong())
+        }
     }
 }

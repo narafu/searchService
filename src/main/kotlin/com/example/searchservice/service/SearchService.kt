@@ -24,11 +24,11 @@ class SearchService(
 ) {
 
     fun blogList(
-        searchSource: SearchSourceType,
+        searchSource: SearchSourceType = SearchSourceType.kakao,
         query: String,
-        sort: SortType,
-        page: Int,
-        size: Int
+        sort: SortType = SortType.accuracy,
+        page: Int = 1,
+        size: Int = 10
     ): String {
 
         val (url, requestHeader) = when (searchSource) {
